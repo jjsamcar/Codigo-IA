@@ -2,8 +2,26 @@
 <html>
 <head>
   <base target="_top">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <style>
+    /* Escala tipográfica y espaciados.
+       Valores base (tablet); se ajustan en los @media del final:
+       pantallas chicas -> textos más grandes y menos margen lateral. */
+    :root {
+      --fs-title: 22px;
+      --fs-sub: 13px;
+      --fs-label: 14px;
+      --fs-input: 16px;
+      --fs-btn: 16px;
+      --fs-btn-sm: 15px;
+      --fs-mono: 13px;
+      --fs-section: 17px;
+      --pad-x: 15px;
+      --pad-y: 15px;
+      --pad-box: 15px;
+      --input-pad: 12px;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -15,9 +33,12 @@
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
       padding: 0;
+      font-size: var(--fs-input);
+      -webkit-text-size-adjust: 100%;
     }
 
     .container {
+      width: 100%;
       max-width: 100%;
       margin: 0 auto;
       background: white;
@@ -27,25 +48,25 @@
     .header {
       background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
       color: white;
-      padding: 20px 15px;
+      padding: 20px var(--pad-x);
       text-align: center;
     }
 
     .header h1 {
-      font-size: 22px;
+      font-size: var(--fs-title);
       margin-bottom: 5px;
       font-weight: 600;
     }
 
     .header p {
-      font-size: 13px;
+      font-size: var(--fs-sub);
       opacity: 0.95;
     }
 
     .nav-bar {
       background: #fff3e0;
       border-bottom: 2px solid #FF6B00;
-      padding: 10px 15px;
+      padding: 10px var(--pad-x);
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -56,8 +77,8 @@
       color: white;
       border: none;
       border-radius: 8px;
-      padding: 9px 18px;
-      font-size: 14px;
+      padding: 10px 18px;
+      font-size: var(--fs-btn-sm);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
@@ -80,7 +101,8 @@
     }
 
     .form-content {
-      padding: 15px;
+      padding: var(--pad-y) var(--pad-x);
+      padding-bottom: calc(var(--pad-y) + env(safe-area-inset-bottom, 0px));
     }
 
     .form-group {
@@ -92,7 +114,7 @@
       margin-bottom: 8px;
       color: #333;
       font-weight: 600;
-      font-size: 14px;
+      font-size: var(--fs-label);
     }
 
     .required {
@@ -101,10 +123,10 @@
 
     input, select, textarea {
       width: 100%;
-      padding: 12px;
+      padding: var(--input-pad);
       border: 2px solid #e0e0e0;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: var(--fs-input);
       transition: all 0.3s;
       font-family: inherit;
     }
@@ -136,16 +158,16 @@
     }
 
     .codigo-prefijo {
-      padding: 12px 15px;
+      padding: var(--input-pad) 15px;
       background-color: #FF6B00;
       color: white;
       border: 2px solid #FF6B00;
       border-radius: 8px 0 0 8px;
       font-weight: 700;
-      font-size: 16px;
+      font-size: var(--fs-input);
       display: flex;
       align-items: center;
-      min-width: 50px;
+      min-width: 56px;
       justify-content: center;
       cursor: pointer;
       user-select: none;
@@ -194,7 +216,7 @@
       padding: 15px;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: var(--fs-btn);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
@@ -245,22 +267,27 @@
       transform: none !important;
     }
 
+    #infoAdicionalContainer {
+      margin-bottom: 18px;
+    }
+
     .info-adicional {
       display: none;
       background: #f8f9fa;
       border: 2px solid #17a2b8;
       border-radius: 8px;
-      padding: 15px;
+      padding: var(--pad-box);
       margin-top: 15px;
     }
 
     .info-adicional h4 {
       color: #17a2b8;
       margin-bottom: 10px;
-      font-size: 16px;
+      font-size: var(--fs-input);
     }
 
     .info-adicional p {
+      font-size: var(--fs-label);
       margin-bottom: 15px;
       line-height: 1.6;
       white-space: pre-wrap;
@@ -280,22 +307,22 @@
       background: #f8f9fa;
       border: 2px solid #dee2e6;
       border-radius: 8px;
-      padding: 15px;
+      padding: var(--pad-box);
       margin-top: 15px;
     }
 
     .resumen h3 {
       color: #FF6B00;
       margin-bottom: 15px;
-      font-size: 18px;
+      font-size: var(--fs-section);
     }
 
     .resumen-texto {
       background: white;
-      padding: 15px;
+      padding: var(--pad-box);
       border-radius: 5px;
       font-family: 'Courier New', monospace;
-      font-size: 13px;
+      font-size: var(--fs-mono);
       line-height: 1.8;
       white-space: pre-wrap;
       word-wrap: break-word;
@@ -308,7 +335,7 @@
       padding: 12px;
       border-radius: 8px;
       margin: 15px 0;
-      font-size: 14px;
+      font-size: var(--fs-label);
       display: none;
     }
 
@@ -340,7 +367,7 @@
     }
 
     .section-title {
-      font-size: 17px;
+      font-size: var(--fs-section);
       font-weight: 700;
       color: #FF6B00;
       margin-bottom: 15px;
@@ -356,10 +383,10 @@
 
     .ot-input {
       flex: 1;
-      padding: 12px;
+      padding: var(--input-pad);
       border: 2px solid #e0e0e0;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: var(--fs-input);
       font-family: inherit;
       transition: all 0.3s;
     }
@@ -371,12 +398,12 @@
     }
 
     .btn-buscar {
-      padding: 12px 20px;
+      padding: var(--input-pad) 20px;
       background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: var(--fs-btn-sm);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
@@ -414,7 +441,7 @@
 
     .resultado-header h3 {
       color: #FF6B00;
-      font-size: 18px;
+      font-size: var(--fs-section);
     }
 
     .ot-badge {
@@ -422,17 +449,17 @@
       color: white;
       padding: 5px 14px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: var(--fs-sub);
       font-weight: 700;
       letter-spacing: 0.5px;
     }
 
     .resultado-texto {
       background: white;
-      padding: 15px;
+      padding: var(--pad-box);
       border-radius: 8px;
       font-family: 'Courier New', monospace;
-      font-size: 13px;
+      font-size: var(--fs-mono);
       line-height: 1.9;
       white-space: pre-wrap;
       word-wrap: break-word;
@@ -447,7 +474,7 @@
       padding: 15px;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: var(--fs-btn);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
@@ -474,10 +501,10 @@
 
     .btn-nueva-consulta {
       width: 100%;
-      padding: 13px;
+      padding: 14px;
       border: 2px solid #FF6B00;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: var(--fs-btn-sm);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
@@ -508,8 +535,20 @@
     }
 
     .estado-inicial p {
-      font-size: 15px;
+      font-size: var(--fs-label);
       line-height: 1.6;
+    }
+
+    .aviso-equipo {
+      background: #fff3e0;
+      border: 1px dashed #FF6B00;
+      border-radius: 8px;
+      color: #8a4b00;
+      font-size: var(--fs-label);
+      line-height: 1.5;
+      padding: var(--pad-box);
+      text-align: center;
+      margin-top: 5px;
     }
 
     .separador {
@@ -519,6 +558,15 @@
     }
 
     @media (min-width: 768px) {
+      :root {
+        --fs-title: 24px;
+        --fs-sub: 14px;
+        --fs-mono: 14px;
+        --pad-x: 25px;
+        --pad-y: 25px;
+        --pad-box: 20px;
+      }
+
       body {
         padding: 20px;
       }
@@ -535,38 +583,37 @@
         border-radius: 15px 15px 0 0;
       }
 
-      .header h1 {
-        font-size: 24px;
-      }
-
-      .header p {
-        font-size: 14px;
-      }
-
-      .nav-bar {
-        padding: 10px 25px;
-      }
-
-      .form-content {
-        padding: 25px;
-      }
-
       .form-group {
         margin-bottom: 20px;
       }
 
       .resumen {
-        padding: 20px;
         margin-top: 20px;
       }
 
       .resultado-texto {
-        font-size: 14px;
         max-height: 500px;
       }
     }
 
     @media (max-width: 767px) {
+      /* Teléfono: textos más grandes y menos margen lateral
+         para aprovechar todo el ancho de la pantalla. */
+      :root {
+        --fs-title: 23px;
+        --fs-sub: 14px;
+        --fs-label: 17px;
+        --fs-input: 17px;
+        --fs-btn: 18px;
+        --fs-btn-sm: 17px;
+        --fs-mono: 15px;
+        --fs-section: 19px;
+        --pad-x: 12px;
+        --pad-y: 14px;
+        --pad-box: 12px;
+        --input-pad: 14px;
+      }
+
       body {
         padding: 0;
       }
@@ -578,6 +625,38 @@
 
       .header {
         border-radius: 0;
+      }
+
+      /* Respeta el notch en horizontal sin perder ancho en vertical */
+      .header,
+      .nav-bar,
+      .form-content {
+        padding-left: calc(var(--pad-x) + env(safe-area-inset-left, 0px));
+        padding-right: calc(var(--pad-x) + env(safe-area-inset-right, 0px));
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        margin-bottom: 6px;
+      }
+
+      .btn,
+      .btn-copiar,
+      .btn-nueva-consulta,
+      .btn-buscar {
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+
+      .resumen-texto {
+        max-height: 55vh;
+      }
+
+      .resultado-texto {
+        max-height: 60vh;
       }
 
       .btn-group {
@@ -681,7 +760,11 @@
 
           <div id="camposDinamicos"></div>
 
-          <button type="button" class="btn btn-primary" onclick="generarResumen()">
+          <div id="avisoEquipo" class="aviso-equipo">
+            👆 Ingrese el código del equipo para cargar los campos de medición.
+          </div>
+
+          <button type="button" id="btnGenerarResumen" class="btn btn-primary hidden" onclick="generarResumen()">
             📝 Generar Resumen
           </button>
         </form>
@@ -948,7 +1031,10 @@
             
             // Generar campos dinámicos filtrados por etiquetas
             generarCamposFiltrados(equipo.etiquetas);
-            
+
+            // El botón de resumen solo aparece con el equipo ya validado
+            mostrarBotonResumen(true);
+
             mostrarAlerta('✓ Equipo encontrado', 'success', 'formulario');
           } else {
             ocultarInfoEquipo();
@@ -1062,6 +1148,21 @@
       
       // Limpiar campos dinámicos
       document.getElementById('camposDinamicos').innerHTML = '';
+
+      mostrarBotonResumen(false);
+    }
+
+    function mostrarBotonResumen(mostrar) {
+      var btn = document.getElementById('btnGenerarResumen');
+      var aviso = document.getElementById('avisoEquipo');
+
+      if (mostrar) {
+        btn.classList.remove('hidden');
+        aviso.classList.add('hidden');
+      } else {
+        btn.classList.add('hidden');
+        aviso.classList.remove('hidden');
+      }
     }
 
     function convertirPuntoAComa(valor) {
