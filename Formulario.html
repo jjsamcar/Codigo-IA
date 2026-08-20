@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+      color: white;
+      padding: 20px 15px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .header p {
+      font-size: 13px;
+      opacity: 0.95;
+    }
+
+    .nav-bar {
+      background: #fff3e0;
+      border-bottom: 2px solid #FF6B00;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .btn-nav {
+      background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 9px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(255, 107, 0, 0.4);
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .form-content {
+      padding: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .required {
+      color: #FF6B00;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #FF6B00;
+      box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+    }
+
+    input:required:invalid, select:required:invalid, textarea:required:invalid {
+      border-color: #e0e0e0;
+    }
+
+    input:required:invalid:focus, select:required:invalid:focus, textarea:required:invalid:focus {
+      border-color: #FF6B00;
+    }
+
+    .readonly-field {
+      background-color: #f5f5f5;
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    .codigo-equipo-container {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .codigo-prefijo {
+      padding: 12px 15px;
+      background-color: #FF6B00;
+      color: white;
+      border: 2px solid #FF6B00;
+      border-radius: 8px 0 0 8px;
+      font-weight: 700;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      min-width: 50px;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .codigo-prefijo:hover {
+      background-color: #FF8C00;
+      border-color: #FF8C00;
+    }
+
+    .codigo-equipo-numero {
+      flex: 1;
+      border-radius: 0 8px 8px 0 !important;
+      border-left: none !important;
+    }
+
+    .codigo-equipo-numero:focus {
+      border-left: 2px solid #FF6B00 !important;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 10px;
+      color: #FF6B00;
+      font-weight: 600;
+    }
+
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #FF6B00;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(255, 107, 0, 0.4);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .btn-warning {
+      background: #ffc107;
+      color: #000;
+    }
+
+    .btn-warning:hover {
+      background: #e0a800;
+    }
+
+    .btn-info {
+      background: #17a2b8;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .btn-info:hover {
+      background: #138496;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .info-adicional {
+      display: none;
+      background: #f8f9fa;
+      border: 2px solid #17a2b8;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+
+    .info-adicional h4 {
+      color: #17a2b8;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .info-adicional p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .info-adicional .info-section {
+      margin-bottom: 15px;
+    }
+
+    .info-adicional .info-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .resumen {
+      display: none;
+      background: #f8f9fa;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+
+    .resumen h3 {
+      color: #FF6B00;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .resumen-texto {
+      background: white;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 400px;
+      overflow-y: auto;
+      border: 1px solid #dee2e6;
+    }
+
+    .alert {
+      padding: 12px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 14px;
+      display: none;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn-group .btn {
+      flex: 1;
+      margin-top: 0;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #FF6B00;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #fff3e0;
+    }
+
+    .ot-container {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .ot-input {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: all 0.3s;
+    }
+
+    .ot-input:focus {
+      outline: none;
+      border-color: #FF6B00;
+      box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+    }
+
+    .btn-buscar {
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-buscar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(255, 107, 0, 0.4);
+    }
+
+    .btn-buscar:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .resultado-panel {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .resultado-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .resultado-header h3 {
+      color: #FF6B00;
+      font-size: 18px;
+    }
+
+    .ot-badge {
+      background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+      color: white;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .resultado-texto {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.9;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 450px;
+      overflow-y: auto;
+      border: 2px solid #dee2e6;
+      color: #222;
+    }
+
+    .btn-copiar {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 12px;
+      background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-copiar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(255, 107, 0, 0.4);
+    }
+
+    .btn-copiar:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn-nueva-consulta {
+      width: 100%;
+      padding: 13px;
+      border: 2px solid #FF6B00;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+      background: white;
+      color: #FF6B00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-nueva-consulta:hover {
+      background: #fff3e0;
+      transform: translateY(-2px);
+    }
+
+    .estado-inicial {
+      text-align: center;
+      padding: 40px 20px;
+      color: #aaa;
+    }
+
+    .estado-inicial .icono-grande {
+      font-size: 60px;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .estado-inicial p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .separador {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 20px 0;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        min-height: auto;
+      }
+
+      .header {
+        padding: 25px 20px;
+        border-radius: 15px 15px 0 0;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .header p {
+        font-size: 14px;
+      }
+
+      .nav-bar {
+        padding: 10px 25px;
+      }
+
+      .form-content {
+        padding: 25px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .resumen {
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      .resultado-texto {
+        font-size: 14px;
+        max-height: 500px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      body {
+        padding: 0;
+      }
+
+      .container {
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .header {
+        border-radius: 0;
+      }
+
+      .btn-group {
+        flex-direction: column;
+      }
+
+      .btn-group .btn {
+        width: 100%;
+      }
+
+      .ot-container {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .btn-buscar {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .resultado-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <h1 id="headerTitulo">📋 Mediciones Preventivas PTAR</h1>
+      <p>Sistema de Registro - VEOLIA</p>
+    </div>
+
+    <div class="nav-bar">
+      <button class="btn-nav" id="btnNavPrincipal" onclick="cambiarVista()">
+        🔍 Consultar OT
+      </button>
+    </div>
+
+    <!-- PÁGINA 1: FORMULARIO -->
+    <div id="vistaFormulario" class="page active">
+      <div class="form-content">
+
+        <div id="alertBoxFormulario" class="alert"></div>
+
+        <form id="formulario">
+          <div class="form-group">
+            <label for="tecnico">Técnico <span class="required">*</span></label>
+            <select id="tecnico" name="tecnico" required>
+              <option value="">Cargando técnicos...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="codigoEquipoNumero">Código del Equipo <span class="required">*</span></label>
+            <div class="codigo-equipo-container">
+              <span class="codigo-prefijo" id="codigoPrefijo" onclick="cambiarPrefijo()">E-</span>
+              <input
+                type="number"
+                id="codigoEquipoNumero"
+                class="codigo-equipo-numero"
+                placeholder="005057"
+                required
+                min="1"
+                inputmode="numeric"
+                pattern="[0-9]*">
+            </div>
+            <div class="loading" id="loadingEquipo">
+              <div class="spinner"></div>
+              Buscando equipo...
+            </div>
+          </div>
+
+          <div class="form-group hidden" id="grupoNombreEquipo">
+            <label for="nombreEquipo">Nombre del Equipo</label>
+            <input type="text" id="nombreEquipo" name="NOMBRE DEL EQUIPO" class="readonly-field" readonly>
+          </div>
+
+          <div class="form-group hidden" id="grupoEstacion">
+            <label for="estacion">Estación</label>
+            <input type="text" id="estacion" name="ESTACIÓN" class="readonly-field" readonly>
+          </div>
+
+          <div id="infoAdicionalContainer" class="hidden">
+            <button type="button" class="btn btn-info" onclick="toggleInfoAdicional()">
+              ℹ️ Información Adicional
+            </button>
+            <div id="infoAdicional" class="info-adicional">
+              <div class="info-section">
+                <h4>📋 Instructivo</h4>
+                <p id="infoInstructivo"></p>
+              </div>
+              <div class="info-section">
+                <h4>🔧 Insumos</h4>
+                <p id="infoInsumos"></p>
+              </div>
+            </div>
+          </div>
+
+          <div id="camposDinamicos"></div>
+
+          <button type="button" class="btn btn-primary" onclick="generarResumen()">
+            📝 Generar Resumen
+          </button>
+        </form>
+
+        <div id="resumen" class="resumen">
+          <h3>📄 Resumen de Mediciones</h3>
+          <div id="resumenTexto" class="resumen-texto"></div>
+
+          <button type="button" id="btnCopiarEnviar" class="btn btn-primary">
+            📋 Copiar Texto y Enviar
+          </button>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-warning" onclick="volverFormularioEditar()">
+              ✏️ Volver y Editar
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="volverFormularioResetear()">
+              🔄 Nuevo Registro
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PÁGINA 2: CONSULTA OT -->
+    <div id="vistaConsulta" class="page">
+      <div class="form-content">
+
+        <div id="alertBoxConsulta" class="alert"></div>
+
+        <p class="section-title">Buscar Orden de Trabajo</p>
+
+        <div class="form-group">
+          <label for="inputOT">Número de OT <span class="required">*</span></label>
+          <div class="ot-container">
+            <input
+              type="text"
+              id="inputOT"
+              class="ot-input"
+              placeholder="Ingrese el número de OT..."
+              autocomplete="off"
+              inputmode="text"
+            >
+            <button class="btn-buscar" id="btnBuscar" onclick="buscarOT()">
+              🔍 Buscar
+            </button>
+          </div>
+        </div>
+
+        <div class="loading" id="loadingBusqueda">
+          <div class="spinner"></div>
+          Buscando OT...
+        </div>
+
+        <div class="separador"></div>
+
+        <div class="estado-inicial" id="estadoInicial">
+          <span class="icono-grande">📂</span>
+          <p>Ingrese un número de OT y presione <strong>Buscar</strong> para visualizar los datos registrados.</p>
+        </div>
+
+        <div class="resultado-panel" id="resultadoPanel">
+          <div class="resultado-header">
+            <h3>📄 Datos Registrados</h3>
+            <span class="ot-badge" id="otBadge"></span>
+          </div>
+
+          <div id="resultadoTexto" class="resultado-texto"></div>
+
+          <button class="btn-copiar" id="btnCopiar" onclick="copiarTexto()">
+            📋 Copiar
+          </button>
+
+          <button class="btn-nueva-consulta" onclick="nuevaConsulta()">
+            🔄 Nueva Consulta
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // ─── Variables globales ───────────────────────────────────────────────────
+    let camposConfig = [];
+    let equipoEncontrado = false;
+    let datosFormulario = {};
+    let camposObligatorios = [];
+    let vistaActual = 'formulario';
+    let prefijoActual = 'E';
+    let equipoActual = null;
+
+    // ─── Init ─────────────────────────────────────────────────────────────────
+    window.addEventListener('load', function () {
+      cargarTecnicos();
+      cargarCampos();
+
+      var btnCopiar = document.getElementById('btnCopiarEnviar');
+      if (btnCopiar) {
+        btnCopiar.onclick = function () {
+          copiarYEnviar();
+        };
+      }
+
+      var inputOT = document.getElementById('inputOT');
+      if (inputOT) {
+        inputOT.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            buscarOT();
+          }
+        });
+      }
+    });
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  NAVEGACIÓN ENTRE VISTAS
+    // ═════════════════════════════════════════════════════════════════════════
+    function cambiarVista() {
+      if (vistaActual === 'formulario') {
+        mostrarVistaConsulta();
+      } else {
+        mostrarVistaFormulario();
+      }
+    }
+
+    function mostrarVistaConsulta() {
+      vistaActual = 'consulta';
+      document.getElementById('vistaFormulario').classList.remove('active');
+      document.getElementById('vistaConsulta').classList.add('active');
+      document.getElementById('headerTitulo').textContent = '🔍 Consulta de OT';
+      document.getElementById('btnNavPrincipal').textContent = '← Volver al Formulario';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(function () {
+        document.getElementById('inputOT').focus();
+      }, 100);
+    }
+
+    function mostrarVistaFormulario() {
+      vistaActual = 'formulario';
+      document.getElementById('vistaConsulta').classList.remove('active');
+      document.getElementById('vistaFormulario').classList.add('active');
+      document.getElementById('headerTitulo').textContent = '📋 Mediciones Preventivas PTAR';
+      document.getElementById('btnNavPrincipal').textContent = '🔍 Consultar OT';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  CAMBIAR PREFIJO E- / K-
+    // ═════════════════════════════════════════════════════════════════════════
+    function cambiarPrefijo() {
+      if (prefijoActual === 'E') {
+        prefijoActual = 'K';
+      } else {
+        prefijoActual = 'E';
+      }
+      document.getElementById('codigoPrefijo').textContent = prefijoActual + '-';
+      
+      // Limpiar búsqueda anterior
+      ocultarInfoEquipo();
+      document.getElementById('codigoEquipoNumero').value = '';
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  FORMULARIO
+    // ═════════════════════════════════════════════════════════════════════════
+    function cargarTecnicos() {
+      google.script.run
+        .withSuccessHandler(function (tecnicos) {
+          const select = document.getElementById('tecnico');
+          select.innerHTML = '<option value="">Seleccione un técnico...</option>';
+
+          if (!tecnicos || tecnicos.length === 0) {
+            select.innerHTML = '<option value="">No hay técnicos disponibles</option>';
+            mostrarAlerta('⚠️ No se encontraron técnicos', 'error', 'formulario');
+            return;
+          }
+
+          tecnicos.forEach(function (tecnico) {
+            const option = document.createElement('option');
+            option.value = tecnico;
+            option.textContent = tecnico;
+            select.appendChild(option);
+          });
+        })
+        .withFailureHandler(function (error) {
+          const select = document.getElementById('tecnico');
+          select.innerHTML = '<option value="">Error al cargar técnicos</option>';
+          mostrarAlerta('❌ Error al cargar técnicos: ' + error, 'error', 'formulario');
+        })
+        .obtenerTecnicos();
+    }
+
+    function cargarCampos() {
+      google.script.run
+        .withSuccessHandler(function (campos) {
+          camposConfig = campos;
+          
+          // Construir lista de campos obligatorios desde la configuración
+          camposObligatorios = campos
+            .filter(c => c.obligatorio)
+            .map(c => c.campo);
+          
+          generarCamposDinamicos();
+          configurarBusquedaEquipo();
+        })
+        .withFailureHandler(function (error) {
+          mostrarAlerta('❌ Error al cargar campos: ' + error, 'error', 'formulario');
+        })
+        .obtenerCampos();
+    }
+
+    function generarCamposDinamicos() {
+      const container = document.getElementById('camposDinamicos');
+      container.innerHTML = '';
+
+      // Inicialmente no mostramos ningún campo dinámico
+      // Se mostrarán después de buscar el equipo
+    }
+
+    function configurarBusquedaEquipo() {
+      const codigoInput = document.getElementById('codigoEquipoNumero');
+      if (codigoInput) {
+        codigoInput.addEventListener('blur', buscarEquipoPorCodigo);
+        codigoInput.addEventListener('change', buscarEquipoPorCodigo);
+      }
+    }
+
+    function buscarEquipoPorCodigo() {
+      const numeroEquipo = document.getElementById('codigoEquipoNumero').value.trim();
+
+      if (!numeroEquipo) {
+        ocultarInfoEquipo();
+        return;
+      }
+
+      const numeroFormateado = numeroEquipo.padStart(6, '0');
+      const codigo = prefijoActual + '-' + numeroFormateado;
+
+      document.getElementById('loadingEquipo').style.display = 'block';
+
+      google.script.run
+        .withSuccessHandler(function (equipo) {
+          document.getElementById('loadingEquipo').style.display = 'none';
+
+          if (equipo) {
+            equipoActual = equipo;
+            document.getElementById('nombreEquipo').value = equipo.nombre;
+            document.getElementById('estacion').value = equipo.estacion;
+            document.getElementById('grupoNombreEquipo').classList.remove('hidden');
+            document.getElementById('grupoEstacion').classList.remove('hidden');
+            equipoEncontrado = true;
+            
+            // Mostrar información adicional si existe
+            if (equipo.instructivo || equipo.insumos) {
+              document.getElementById('infoInstructivo').textContent = equipo.instructivo || 'No disponible';
+              document.getElementById('infoInsumos').textContent = equipo.insumos || 'No disponible';
+              document.getElementById('infoAdicionalContainer').classList.remove('hidden');
+            } else {
+              document.getElementById('infoAdicionalContainer').classList.add('hidden');
+            }
+            
+            // Generar campos dinámicos filtrados por etiquetas
+            generarCamposFiltrados(equipo.etiquetas);
+            
+            mostrarAlerta('✓ Equipo encontrado', 'success', 'formulario');
+          } else {
+            ocultarInfoEquipo();
+            mostrarAlerta('⚠ Código de equipo no encontrado: ' + codigo, 'error', 'formulario');
+          }
+        })
+        .withFailureHandler(function (error) {
+          document.getElementById('loadingEquipo').style.display = 'none';
+          ocultarInfoEquipo();
+          mostrarAlerta('❌ Error al buscar equipo: ' + error, 'error', 'formulario');
+        })
+        .buscarEquipo(codigo);
+    }
+
+    function generarCamposFiltrados(etiquetasEquipo) {
+      const container = document.getElementById('camposDinamicos');
+      container.innerHTML = '';
+
+      // Filtrar campos que coincidan con las etiquetas del equipo
+      const camposFiltrados = camposConfig.filter(campo => {
+        // Si el campo NO tiene etiquetas, se muestra siempre (campo universal)
+        if (!campo.etiquetas || campo.etiquetas.length === 0) {
+          return true;
+        }
+        
+        // Si el campo SÍ tiene etiquetas pero el equipo NO tiene etiquetas, NO mostrar
+        if (!etiquetasEquipo || etiquetasEquipo.length === 0) {
+          return false;
+        }
+        
+        // Verificar si hay al menos una coincidencia entre etiquetas
+        return campo.etiquetas.some(etiquetaCampo => 
+          etiquetasEquipo.includes(etiquetaCampo)
+        );
+      });
+
+      camposFiltrados.forEach(function (campo) {
+        const div = document.createElement('div');
+        div.className = 'form-group';
+
+        const label = document.createElement('label');
+        const nombreCampo = campo.campo;
+        label.textContent = nombreCampo;
+
+        if (campo.obligatorio) {
+          const span = document.createElement('span');
+          span.className = 'required';
+          span.textContent = ' *';
+          label.appendChild(span);
+        }
+
+        div.appendChild(label);
+
+        let input;
+        const tipoDato = campo.tipo;
+
+        if (tipoDato === 'TEXTO') {
+          if (nombreCampo === 'OBSERVACIONES') {
+            input = document.createElement('textarea');
+            input.rows = 4;
+          } else {
+            input = document.createElement('input');
+            input.type = 'text';
+          }
+        } else if (tipoDato === 'NÚMERO ENTERO') {
+          input = document.createElement('input');
+          input.type = 'number';
+          input.step = '1';
+          input.inputMode = 'numeric';
+        } else if (tipoDato === 'NÚMERO CON 2 DECIMALES MÁXIMO') {
+          input = document.createElement('input');
+          input.type = 'text';
+          input.inputMode = 'decimal';
+          input.placeholder = 'Ej: 12,50 o 12.50';
+        } else if (tipoDato.includes('FECHA')) {
+          input = document.createElement('input');
+          input.type = 'date';
+        }
+
+        input.id = nombreCampo.replace(/\s+/g, '_');
+        input.name = nombreCampo;
+
+        if (campo.obligatorio) {
+          input.required = true;
+        }
+
+        div.appendChild(input);
+        container.appendChild(div);
+      });
+    }
+
+
+    function toggleInfoAdicional() {
+      const infoDiv = document.getElementById('infoAdicional');
+      if (infoDiv.style.display === 'none' || infoDiv.style.display === '') {
+        infoDiv.style.display = 'block';
+      } else {
+        infoDiv.style.display = 'none';
+      }
+    }
+
+    function ocultarInfoEquipo() {
+      document.getElementById('grupoNombreEquipo').classList.add('hidden');
+      document.getElementById('grupoEstacion').classList.add('hidden');
+      document.getElementById('infoAdicionalContainer').classList.add('hidden');
+      document.getElementById('nombreEquipo').value = '';
+      document.getElementById('estacion').value = '';
+      document.getElementById('infoAdicional').style.display = 'none';
+      equipoEncontrado = false;
+      equipoActual = null;
+      
+      // Limpiar campos dinámicos
+      document.getElementById('camposDinamicos').innerHTML = '';
+    }
+
+    function convertirPuntoAComa(valor) {
+      if (typeof valor === 'string') {
+        return valor.replace(/\./g, ',');
+      }
+      return valor;
+    }
+
+    function validarCamposObligatorios() {
+      var camposFaltantes = [];
+
+      camposObligatorios.forEach(function (nombreCampo) {
+        var inputId = nombreCampo.replace(/\s+/g, '_');
+        var input = document.getElementById(inputId);
+
+        if (input && (!input.value || input.value.trim() === '')) {
+          camposFaltantes.push(nombreCampo);
+          input.style.borderColor = '#dc3545';
+        } else if (input) {
+          input.style.borderColor = '#e0e0e0';
+        }
+      });
+
+      return camposFaltantes;
+    }
+
+    function generarResumen() {
+      if (!equipoEncontrado) {
+        mostrarAlerta('⚠ Debe ingresar un código de equipo válido', 'error', 'formulario');
+        return;
+      }
+
+      const tecnico = document.getElementById('tecnico').value;
+      if (!tecnico) {
+        mostrarAlerta('⚠ Debe seleccionar un técnico', 'error', 'formulario');
+        return;
+      }
+
+      var camposFaltantes = validarCamposObligatorios();
+      if (camposFaltantes.length > 0) {
+        mostrarAlerta('⚠ Debe completar los siguientes campos obligatorios: ' + camposFaltantes.join(', '), 'error', 'formulario');
+        var primerCampoId = camposFaltantes[0].replace(/\s+/g, '_');
+        var primerCampo = document.getElementById(primerCampoId);
+        if (primerCampo) {
+          primerCampo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          primerCampo.focus();
+        }
+        return;
+      }
+
+      const form = document.getElementById('formulario');
+      const formData = new FormData(form);
+
+      datosFormulario = {};
+      let resumen = '';
+
+      datosFormulario['TÉCNICO'] = tecnico;
+
+      const numeroEquipo = document.getElementById('codigoEquipoNumero').value.trim();
+      const numeroFormateado = numeroEquipo.padStart(6, '0');
+      const codigoEquipo = prefijoActual + '-' + numeroFormateado;
+      const nombreEquipo = document.getElementById('nombreEquipo').value;
+      const estacion = document.getElementById('estacion').value;
+
+      datosFormulario['CÓDIGO DEL EQUIPO'] = codigoEquipo;
+      datosFormulario['NOMBRE DEL EQUIPO'] = nombreEquipo;
+      datosFormulario['ESTACIÓN'] = estacion;
+
+      resumen += 'CÓDIGO DEL EQUIPO: ' + codigoEquipo + '\n';
+      resumen += 'NOMBRE DEL EQUIPO: ' + nombreEquipo + '\n';
+      resumen += 'ESTACIÓN: ' + estacion + '\n';
+      resumen += '\n';
+
+      const camposExcluidos = ['tecnico', 'CÓDIGO DEL EQUIPO', 'NOMBRE DEL EQUIPO', 'ESTACIÓN'];
+
+      for (let [key, value] of formData.entries()) {
+        if (!camposExcluidos.includes(key)) {
+          if (value && value.trim() !== '') {
+            const valorConvertido = convertirPuntoAComa(value);
+            datosFormulario[key] = valorConvertido;
+            resumen += key + ': ' + valorConvertido + '\n';
+          }
+        }
+      }
+
+      document.getElementById('resumenTexto').textContent = resumen;
+      document.getElementById('formulario').style.display = 'none';
+      document.getElementById('resumen').style.display = 'block';
+
+      window.scrollTo(0, 0);
+    }
+
+    function volverFormularioEditar() {
+      document.getElementById('formulario').style.display = 'block';
+      document.getElementById('resumen').style.display = 'none';
+      window.scrollTo(0, 0);
+    }
+
+    function volverFormularioResetear() {
+      if (confirm('¿Está seguro de que desea resetear todos los campos?')) {
+        location.reload();
+      }
+    }
+
+    function copiarYEnviar() {
+      var texto = document.getElementById('resumenTexto').textContent;
+      var btnEnviar = document.getElementById('btnCopiarEnviar');
+      var textoOriginal = btnEnviar.textContent;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(texto).then(function () {
+          mostrarAlerta('✓ Texto copiado al portapapeles', 'success', 'formulario');
+          enviarDatosASheets(btnEnviar, textoOriginal);
+        }).catch(function () {
+          copiarTextoFallback(texto);
+          enviarDatosASheets(btnEnviar, textoOriginal);
+        });
+      } else {
+        copiarTextoFallback(texto);
+        enviarDatosASheets(btnEnviar, textoOriginal);
+      }
+    }
+
+    function copiarTextoFallback(texto) {
+      var textArea = document.createElement('textarea');
+      textArea.value = texto;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        mostrarAlerta('✓ Texto copiado al portapapeles', 'success', 'formulario');
+      } catch (err) {
+        mostrarAlerta('⚠ No se pudo copiar el texto', 'error', 'formulario');
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function enviarDatosASheets(btnEnviar, textoOriginal) {
+      if (!datosFormulario || Object.keys(datosFormulario).length === 0) {
+        mostrarAlerta('❌ Error: No hay datos para enviar', 'error', 'formulario');
+        return;
+      }
+
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = '⏳ Guardando en Google Sheets...';
+
+      google.script.run
+        .withSuccessHandler(function (response) {
+          btnEnviar.disabled = false;
+          btnEnviar.textContent = textoOriginal;
+
+          if (response && response.success) {
+            mostrarAlerta('✓ Datos guardados exitosamente en Google Sheets. Use el botón "Nuevo Registro" para crear otro.', 'success', 'formulario');
+          } else {
+            var mensaje = response && response.message ? response.message : 'Error desconocido';
+            mostrarAlerta('❌ Error: ' + mensaje, 'error', 'formulario');
+          }
+        })
+        .withFailureHandler(function (error) {
+          btnEnviar.disabled = false;
+          btnEnviar.textContent = textoOriginal;
+          mostrarAlerta('❌ Error al enviar: ' + String(error), 'error', 'formulario');
+        })
+        .guardarDatos(datosFormulario);
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  CONSULTA OT
+    // ═════════════════════════════════════════════════════════════════════════
+    function buscarOT() {
+      var inputOT = document.getElementById('inputOT');
+      var ot = inputOT.value.trim();
+
+      if (!ot) {
+        mostrarAlerta('⚠ Debe ingresar un número de OT', 'error', 'consulta');
+        inputOT.focus();
+        return;
+      }
+
+      document.getElementById('resultadoPanel').style.display = 'none';
+      document.getElementById('estadoInicial').style.display = 'none';
+
+      var loading = document.getElementById('loadingBusqueda');
+      loading.style.display = 'block';
+
+      var btnBuscar = document.getElementById('btnBuscar');
+      btnBuscar.disabled = true;
+
+      google.script.run
+        .withSuccessHandler(function (respuesta) {
+          loading.style.display = 'none';
+          btnBuscar.disabled = false;
+
+          if (respuesta && respuesta.encontrado) {
+            mostrarAlerta('✓ OT encontrada', 'success', 'consulta');
+            mostrarResultado(ot, respuesta.datos);
+          } else {
+            var msg = respuesta && respuesta.mensaje
+              ? respuesta.mensaje
+              : 'No se encontró la OT ingresada';
+            mostrarAlerta('⚠ ' + msg, 'error', 'consulta');
+            document.getElementById('estadoInicial').style.display = 'block';
+          }
+        })
+        .withFailureHandler(function (error) {
+          loading.style.display = 'none';
+          btnBuscar.disabled = false;
+          mostrarAlerta('❌ Error al buscar: ' + String(error), 'error', 'consulta');
+          document.getElementById('estadoInicial').style.display = 'block';
+        })
+        .buscarDatosPorOT(ot);
+    }
+
+    function mostrarResultado(ot, datos) {
+      document.getElementById('otBadge').textContent = 'OT: ' + ot;
+
+      var texto = '';
+
+      datos.forEach(function (par, index) {
+        var clave = '';
+        var valor = '';
+
+        if (Array.isArray(par)) {
+          clave = String(par[0] !== undefined ? par[0] : '');
+          valor = String(par[1] !== undefined ? par[1] : '');
+        } else if (typeof par === 'object' && par !== null) {
+          var keys = Object.keys(par);
+          clave = String(par[keys[0]] !== undefined ? par[keys[0]] : '');
+          valor = String(par[keys[1]] !== undefined ? par[keys[1]] : '');
+        }
+
+        if (clave !== '') {
+          texto += clave + ': ' + valor + '\n';
+
+          var claveUpper = clave.toUpperCase().trim();
+          if (
+            (claveUpper === 'FECHA DE FINALIZACIÓN' || claveUpper === 'FECHA DE FINALIZACION') &&
+            index < datos.length - 1
+          ) {
+            texto += '\n';
+          }
+        }
+      });
+
+      document.getElementById('resultadoTexto').textContent = texto.trimEnd();
+      document.getElementById('resultadoPanel').style.display = 'block';
+
+      document.getElementById('resultadoPanel').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    function copiarTexto() {
+      var texto = document.getElementById('resultadoTexto').textContent;
+      var btnCopiar = document.getElementById('btnCopiar');
+      var textoOriginal = btnCopiar.innerHTML;
+
+      if (!texto || texto.trim() === '') {
+        mostrarAlerta('⚠ No hay texto para copiar', 'error', 'consulta');
+        return;
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(texto).then(function () {
+          mostrarAlerta('✓ Texto copiado al portapapeles', 'success', 'consulta');
+          btnCopiar.innerHTML = '✅ ¡Copiado!';
+          btnCopiar.disabled = true;
+          setTimeout(function () {
+            btnCopiar.innerHTML = textoOriginal;
+            btnCopiar.disabled = false;
+          }, 2500);
+        }).catch(function () {
+          copiarTextoConsultaFallback(texto, btnCopiar, textoOriginal);
+        });
+      } else {
+        copiarTextoConsultaFallback(texto, btnCopiar, textoOriginal);
+      }
+    }
+
+    function copiarTextoConsultaFallback(texto, btnCopiar, textoOriginal) {
+      var textArea = document.createElement('textarea');
+      textArea.value = texto;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        mostrarAlerta('✓ Texto copiado al portapapeles', 'success', 'consulta');
+        btnCopiar.innerHTML = '✅ ¡Copiado!';
+        btnCopiar.disabled = true;
+        setTimeout(function () {
+          btnCopiar.innerHTML = textoOriginal;
+          btnCopiar.disabled = false;
+        }, 2500);
+      } catch (err) {
+        mostrarAlerta('⚠ No se pudo copiar el texto automáticamente', 'error', 'consulta');
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function nuevaConsulta() {
+      document.getElementById('inputOT').value = '';
+      document.getElementById('resultadoPanel').style.display = 'none';
+      document.getElementById('resultadoTexto').textContent = '';
+      document.getElementById('otBadge').textContent = '';
+      document.getElementById('estadoInicial').style.display = 'block';
+      document.getElementById('alertBoxConsulta').style.display = 'none';
+      document.getElementById('inputOT').focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function mostrarAlerta(mensaje, tipo, contexto) {
+      var idBox = contexto === 'consulta' ? 'alertBoxConsulta' : 'alertBoxFormulario';
+      var alertBox = document.getElementById(idBox);
+      alertBox.textContent = mensaje;
+      alertBox.className = 'alert alert-' + tipo;
+      alertBox.style.display = 'block';
+
+      setTimeout(function () {
+        alertBox.style.display = 'none';
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
