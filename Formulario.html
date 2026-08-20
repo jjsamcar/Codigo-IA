@@ -63,6 +63,17 @@
       opacity: 0.95;
     }
 
+    /* Marcador de versión: sirve para confirmar que la implementación
+       publicada ya tomó los cambios. Subir el número en cada despliegue. */
+    .version {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+      padding: 1px 8px;
+      font-size: 0.85em;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
     .nav-bar {
       background: #fff3e0;
       border-bottom: 2px solid #FF6B00;
@@ -689,7 +700,7 @@
 
     <div class="header">
       <h1 id="headerTitulo">📋 Mediciones Preventivas PTAR</h1>
-      <p>Sistema de Registro - VEOLIA</p>
+      <p>Sistema de Registro - VEOLIA <span class="version">v2</span></p>
     </div>
 
     <div class="nav-bar">

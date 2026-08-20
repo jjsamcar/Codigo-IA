@@ -1,6 +1,12 @@
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('Formulario')
     .setTitle('Mediciones Preventivas - VEOLIA')
+    // IMPRESCINDIBLE para móvil: Apps Script sirve el HTML dentro de un iframe
+    // y la etiqueta <meta viewport> del archivo Formulario NO tiene efecto,
+    // manda la de la página contenedora. Sin esta línea el teléfono asume una
+    // pantalla de 980px, aplica el diseño de escritorio y luego lo achica,
+    // por lo que los textos se ven diminutos y no se usa todo el ancho.
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
